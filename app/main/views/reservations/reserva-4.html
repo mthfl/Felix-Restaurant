@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/theme/style.css">
+    <title>Sessão de Eventos - Evento Privado</title>
+
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+            box-sizing: border-box;
+            font-family: sans-serif;
+        }
+    </style>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'ceara-golden': '#8C5C03',
+                        'ceara-yellow': '#D9961A',
+                        'ceara-brown': '#A65A3F',
+                        'ceara-gray': '#404040',
+                        'ceara-black': '#0D0D0D',
+                    }
+                },
+            },
+        };
+    </script>
+  
+</head>
+
+<body>
+    <div class="flex flex-col">
+        <div class="flex justify-center mb-[40px]"">
+            <div class="flex justify-center items-center border-b-2 w-[715px] space-x-6 md:space-x-[40px] mt-1 pb-0.5">
+                <a href="../../index.html">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none"
+                        stroke="#0D0D0D" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                </a>
+                <div>
+                    <h1 class="text-center text-[20px] mt-3 pb-3 translate-x-[-6px]">Sessão de eventos</h1>
+                </div>
+            </div>
+        </div>
+        <div class="flex justify-center md:translate-x-[-60px]">
+            <div class="flex flex-col justify-center items-center mx-10 text-center md:text-left md:flex-row w-[600px] md:gap-7">
+                <img class="w-[180px] h-[180px] mb-6 md:w-[220px] md:h-[220px] rounded-3xl object-cover" src="../../assets/img/event/reserved.jpg" alt="">
+                <div class="flex flex-col w-[500px] max-w-[500px]">
+                    <h1 class="text-xl md:text-2xl my-2 font-semibold">Evento Privado</h1>
+                    <h2 class="text-lg md:text-xl my-1 text-[#5a5a5a] font-semibold">R$ Determinado na seleção de Itens</h2>
+                    <div class="">
+                        <p class="max-w-[300px] text-[#606060] py-2 transform translate-x-[100px] md:translate-x-[0px]">Em nosso Restaurante, oferecemos eventos privados exclusivos, com serviços personalizados para ocasiões especiais.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex justify-center mt-3 md:mt-[0px] items-center">
+            <div class="relative w-full max-w-[330px] md:max-w-[700px] md:translate-x-[-7px] mt-1">
+                <i class="fas fa-search text-gray-500 absolute left-3 top-2.5"></i>
+                <input class="w-full h-10 bg-[#EBEBEB] focus:outline-none focus:border-ceara-yellow focus:border-2 rounded-xl pl-10" 
+                type="text" placeholder="Pesquise pelo nome">
+            </div>
+        </div>
+        <div class="flex flex-col justify-center items-center my-4 px-4 cursor-pointer">
+            <div class="w-full max-w-[330px] md:max-w-[800px] bg-[#EBEBEB] rounded-xl p-4 md:p-5 ml-4 md:ml-[0px] translate-x-[-7px] mb-5">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h2 class="font-bold md:text-lg">Planos Exclusivos</h2>
+                        <p class="text-xs md:text-sm text-[#606060]">Escolha 1 item</p>
+                    </div>
+                    <div>
+                        <i class="fas fa-chevron-right rotate-[270deg] transition-transform duration-300" id="seta"></i>
+                    </div>
+                </div>
+
+                <div class="hidden pt-6" id="toggle-dropdown-planos">
+                    <div class="flex justify-between mb-5">
+                        <div>
+                            <h3>Plano Exclusivo Personalizado</h3>
+                            <p class="text-xs text-[#606060] ml-2.5"> R$ 2.500,00 - R$ 8.000,00 (dependendo da complexidade da personalização)</p>
+                        </div>
+                        <div class="translate-y-[15px]">
+                            <input type="radio" class="rounded-full" name="option">
+                        </div>
+                    </div>
+                    <div class="flex justify-between mb-5">
+                        <div>
+                            <h3>Plano Experiência Imersiva</h3>
+                            <p class="text-xs text-[#606060] ml-2.5"> R$ 3.000,00 - R$ 10.000,00 (dependendo da atividade e número de convidados)</p>
+                        </div>
+                        <div class="translate-y-[15px]">
+                            <input type="radio" class="rounded-full" name="option">
+                        </div>
+                    </div>
+                    <div class="flex justify-between mb-5">
+                        <div>
+                            <h3 class="text-md">Plano VIP</h3>
+                            <p class="text-xs text-[#606060] ml-2.5">  R$ 5.000,00 - R$ 15.000,00 (para eventos de até 20 pessoas)</p>
+                        </div>
+                        <div class="translate-y-[15px]">
+                            <input type="radio" class="rounded-full" name="option">
+                        </div>
+                    </div>
+                    <div class="flex justify-between mb-5">
+                        <div>
+                            <h3 class="text-sm">Plano Sunset & Coquete</h3>
+                            <p class="text-xs text-[#606060] ml-2.5"> R$ 3.000,00 - R$ 8.000,00 (para até 30 pessoas)</p>
+                        </div>
+                        <div class="translate-y-[15px]">
+                            <input type="radio" class="rounded-full" name="option">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Espaços -->
+            <div class="w-full max-w-[800px] bg-[#EBEBEB] rounded-xl p-4 md:p-5 translate-x-[-7px] mb-5 ml-4 md:ml-[0px]">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h2 class="font-bold md:text-lg">Adicionais</h2>
+                        <p class="text-xs md:text-sm text-[#606060]">Escolha até 3 item</p>
+                    </div>
+                    <div>
+                        <i class="fas fa-chevron-right rotate-[270deg] transition-transform duration-300" id="seta2"></i>
+                    </div>
+                </div>
+
+                <div class="hidden pt-6" id="toggle-dropdown-espacos">
+                    <div class="flex justify-between mb-5">
+                        <div>
+                            <h3>Decoração Temática</h3>
+                            <p class="text-xs text-[#606060] ml-2.5"> R$ 1.000,00 - R$ 5.000,00 (dependendo do tema e da complexidade)</p>
+                        </div>
+                        <div class="translate-y-[15px]">
+                            <input type="checkbox" name="option">
+                        </div>
+                    </div>
+                    <div class="flex justify-between mb-5">
+                        <div>
+                            <h3>Recepção Personalizada</h3>
+                            <p class="text-xs text-[#606060] ml-2.5"> R$ 500,00 - R$ 1.500,00 (Sem requisições)</p>
+                        </div>
+                        <div class="translate-y-[15px]">
+                            <input type="checkbox" name="option">
+                        </div>
+                    </div>
+                    <div class="flex justify-between mb-5">
+                        <div>
+                            <h3 class="text-md">Atividades Interativas</h3>
+                            <p class="text-xs text-[#606060] ml-2.5"> R$ 2.000,00 - R$ 6.000,00 (dependendo da atividade e duração)</p>
+                        </div>
+                        <div class="translate-y-[15px]">
+                            <input type="checkbox" name="option">
+                        </div>
+                    </div>
+                    <div class="flex justify-between mb-5">
+                        <div>
+                            <h3 class="text-sm">Pacotes de Fotografia e Vídeo</h3>
+                            <p class="text-xs text-[#606060] ml-2.5">  R$ 1.500,00 - R$ 4.000,00 (Sem requisições)</p>
+                        </div>
+                        <div class="translate-y-[15px]">
+                            <input type="checkbox" name="option">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-full md:max-w-[800px] bg-[#EBEBEB] rounded-xl p-4 md:p-5 translate-x-[-7px] mb-1.5 ml-4 md:ml-[0px]">
+                <h2 class="text-sm md:text-lg">Observação</h2>
+            </div>
+        </div>
+
+        <div class="flex justify-center">
+            <textarea class="w-full max-w-[330px] md:max-w-[700px] h-[150px] mt-1 border-2 border-gray-300 rounded-lg p-4 focus:outline-none focus:border-ceara- placeholder-gray-400"placeholder="Ex: Remover ou Adiconar planos ou adicionais fora á parte"></textarea>
+        </div>
+
+        <div class="flex justify-center items-center my-8 px-4">
+            <a id="finalizarCompraBtn" class="w-full max-w-[300px] text-center border-4 border-ceara-yellow bg-white text-black p-2 rounded-xl font-bold flex items-center justify-center transition duration-300 ease-in-out hover:bg-ceara-yellow hover:text-ceara-black hover:border-ceara-yellow">
+                <i class="fas fa-credit-card mr-2"></i> 
+                Finalizar Compra
+            </a>   
+        </div>
+    </div>
+
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggleDropdownPlanos = document.getElementById('toggle-dropdown-planos');
+            const setaIcon = document.getElementById('seta');
+            
+            // Função para alternar a visibilidade do menu e a rotação da seta
+            function toggleMenu() {
+                toggleDropdownPlanos.classList.toggle('hidden');  
+                setaIcon.classList.toggle('rotate-[90deg]');      
+            }
+        
+            setaIcon.addEventListener('click', toggleMenu);
+        
+            const toggleDropdownEspacos = document.getElementById('toggle-dropdown-espacos');
+            const setaIconEspacos = document.getElementById('seta2');
+            
+            // Função para alternar a visibilidade do menu e a rotação da seta
+            function toggleEspacosMenu() {
+                toggleDropdownEspacos.classList.toggle('hidden');  
+                setaIconEspacos.classList.toggle('rotate-[90deg]');  
+            }
+        
+            setaIconEspacos.addEventListener('click', toggleEspacosMenu);
+        
+            // Selecionando todos os checkboxes
+            const checkboxes = document.querySelectorAll('input[type="checkbox"][name="option"]');
+            
+            // Função para controlar a seleção de no máximo 3 checkboxes
+            checkboxes.forEach((checkbox) => {
+                checkbox.addEventListener('change', () => {
+                    const checkedCount = Array.from(checkboxes).filter(i => i.checked).length;
+        
+                    if (checkedCount > 3) {
+                        checkbox.checked = false;
+                        alert("Você pode escolher até 3 itens.");
+                    }
+                });
+            });
+        
+            const finalizarCompraBtn = document.getElementById('finalizarCompraBtn');
+            finalizarCompraBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const orderDetails = getSelectedItems();
+                
+                if (!orderDetails.plan) {
+                    alert('Por favor, selecione um plano antes de continuar.');
+                    return;
+                }
+        
+                localStorage.setItem('currentOrder', JSON.stringify(orderDetails));
+                window.location.href = 'buy_privado.html'; // Redireciona para a página de finalização
+            });
+        
+            function getSelectedItems() {
+                const selectedPlanRadio = document.querySelector('input[type="radio"][name="option"]:checked');
+                const plan = selectedPlanRadio ? {
+                    name: selectedPlanRadio.closest('.flex').querySelector('h3').textContent,
+                    price: parseFloat(selectedPlanRadio.closest('.flex').querySelector('p').textContent.replace('R$ ', '').replace('.', '').replace(',', '.'))
+                } : null;
+        
+                const selectedSpaces = Array.from(document.querySelectorAll('#toggle-dropdown-espacos input[type="checkbox"]:checked'))
+                    .map(checkbox => ({
+                        name: checkbox.closest('.flex').querySelector('h3').textContent,
+                        price: parseFloat(checkbox.closest('.flex').querySelector('p').textContent.replace('R$ ', '').replace('.', '').replace(',', '.'))
+                    }));
+        
+                const observationTextarea = document.querySelector('textarea');
+                const observation = observationTextarea.value.trim();
+        
+                return {
+                    plan,
+                    spaces: selectedSpaces,
+                    observation,
+                    deliveryFee: 10.00 // Taxa de entrega
+                };
+            }
+        });
+        </script>
+</body>
+
+</html>
+
+</html>

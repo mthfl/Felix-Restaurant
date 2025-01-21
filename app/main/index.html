@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Descubra o encanto e a excelência gastronômica do Restaurante Felix, um ícone da alta culinária em Fortaleza.">
+    <meta name="keywords" content="Restaurante Felix, Gastronomia, Fortaleza, Eventos, Cardápio">
+    <meta name="author" content="Matheus Felix, Kauan Cristian">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="./assets/color.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+   <link rel="shortcut icon" href="./assets/img/icon.svg" type="image/svg">
+    <title>Gastronomia Felix</title>
+
+    <style>
+     /* Animações de Menu */
+     @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+
+        .menu-enter {
+            animation: slideIn 0.3s ease-out forwards;
+        }
+
+        .menu-exit {
+            animation: slideOut 0.3s ease-in forwards;
+        }
+
+        /* Estilos de acessibilidade */
+        .focus-visible {
+            outline: 2px solid #D9961A;
+            outline-offset: 2px;
+        }
+
+        * {
+            outline: none;
+        }
+
+        div.bg-sec1 {
+            background-image: url("https://i.postimg.cc/J4K1GYJp/imgsec-1.jpg");
+        }
+
+        .opt {
+            cursor: pointer;
+        }
+
+        .opt:hover {
+            color: rgb(255, 255, 255);
+            transition: all ease-in-out 280ms;
+        }
+
+
+        @keyframes slow {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        li{
+            animation: slow 0.6s ease-out forwards;
+        }
+
+
+        @keyframes slow-sec {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        div#sec-1{
+            animation: slow-sec 0.6s ease-out forwards;
+        }
+
+        div#cardapio {
+            background-color: #FFF7E0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+
+</head>
+<script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                colors: {
+                    'ceara-golden': '#8C5C03',
+                    'ceara-yellow': '#D9961A',
+                    'ceara-brown': '#A65A3F',
+                    'ceara-gray': 'rgb(214, 212, 212)',
+                    'ceara-black': '#0D0D0D',
+                },
+
+
+            }
+
+        },
+    },
+
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            
+            if (targetElement) {
+                targetElement.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+                
+                // Se o menu móvel estiver aberto, fecha-o
+                const itens = document.getElementById('itens');
+                if (itens && !itens.classList.contains('hidden')) {
+                    alternarMenu();
+                }
+            }
+        });
+    });
+});
+
+function alternarMenu() {
+    var itens = document.getElementById('itens');
+    var abrirMenuBtn = document.querySelector('.fa-bars, .fa-times'); // Seleciona tanto fa-bars quanto fa-times
+    
+    if (itens.classList.contains('hidden')) {
+        // Abrindo o menu
+        itens.classList.remove('hidden');
+        itens.classList.remove('menu-slide-out');
+        itens.classList.add('menu-slide-in', 'menu-transition');
+        
+        // Alterando o ícone para "fechar" (fa-times)
+        abrirMenuBtn.classList.remove('fa-bars');
+        abrirMenuBtn.classList.add('fa-times');
+    } else {
+        // Fechando o menu
+        itens.classList.remove('menu-slide-in');
+        itens.classList.add('menu-slide-out', 'menu-transition');
+
+        setTimeout(() => {
+            itens.classList.add('hidden');
+        }, 300);
+
+        // Alterando o ícone para "abrir" (fa-bars)
+        abrirMenuBtn.classList.remove('fa-times');
+        abrirMenuBtn.classList.add('fa-bars');
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const abrirMenuBtn = document.querySelector('.fa-bars');
+
+    if (abrirMenuBtn) {
+        abrirMenuBtn.addEventListener('click', function(event) {
+            // Impede que o clique no botão de abrir o menu feche imediatamente após abrir
+            event.stopPropagation();
+            alternarMenu();
+        });
+    }
+
+    // Fechar menu ao clicar fora
+    document.addEventListener('click', (event) => {
+        const itens = document.getElementById('itens');
+        const abrirMenuBtn = document.querySelector('.fa-bars, .fa-times');
+        
+        // Verifica se o clique foi fora do menu e do botão
+        if (!itens.contains(event.target) && !abrirMenuBtn.contains(event.target) && !itens.classList.contains('hidden')) {
+            // Fechar menu somente se estiver aberto
+            alternarMenu();
+        }
+    });
+});
+
+
+
+</script>
+
+<body class="select-none">
+    <!-- Div de Escurecimento de background -->
+    <div class="absolute inset-0 bg-black opacity-60 z-10"></div>
+
+    <!-- Início Header -->
+    <div id="home" class="bg-sec1 h-screen bg-cover bg-center relative">
+        <!-- Overlay de Escurecimento -->
+        <div class="absolute inset-0 bg-black opacity-50 z-10"></div>
+
+        
+
+        <header class="relative z-20">
+            <!-- Menu Mobile Toggle -->
+            <div class="cursor-pointer md:hidden absolute top-5 right-5 z-30">
+                <button 
+                    aria-label="Abrir Menu" 
+                    class="text-gray-300 text-[25px] focus:outline-none transition-all hover:text-[#D9961A] duration-500"
+                >
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+
+            <!-- Menu de Navegação -->
+            <nav id="itens" class="hidden md:block z-20 relative">
+                <ul class="md:flex md:items-center md:justify-end md:space-x-9 py-10 text-[#D9961A] md:text-gray-300 md:-translate-x-[100px] md:translate-y-[20px] bg-[#262626] md:bg-transparent h-screen md:h-10 z-30 relative">
+                    <li class="group relative border-b border-gray-400 py-2 md:border-none">
+                        <a href="#home" class="flex items-center gap-2 p-2 hover:text-[#D9961A] transition-colors duration-300 focus:outline-none">
+                            <i class="fa-solid fa-house-chimney"></i>
+                            Home
+                        </a>
+                    </li>
+                    <li class="group relative border-b border-gray-400 py-2 md:border-none">
+                        <a href="#eventos" class="flex items-center gap-2 p-2 hover:text-[#D9961A] transition-colors duration-300 focus:outline-none">
+                            <i class="fa-solid fa-calendar-days"></i>
+                            Eventos
+                        </a>
+                    </li>
+                    <li class="group relative border-b border-gray-400 py-2 md:border-none">
+                        <a href="#cardapio" class="flex items-center gap-2 p-2 hover:text-[#D9961A] transition-colors duration-300 focus:outline-none">
+                            <i class="fa-solid fa-utensils"></i>
+                            Cardápio
+                        </a>
+                    </li>
+                    <li class="group relative border-b border-gray-400 py-2 md:border-none">
+                        <a href="#sobre" class="flex items-center gap-2 p-2 hover:text-[#D9961A] transition-colors duration-300 focus:outline-none">
+                            <i class="fa-solid fa-circle-info"></i>
+                            Sobre
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#reservas" class="block md:inline-block px-5 py-2 transform translate-y-[10px] md:translate-y-[0px] md:border md:border-[#D9961A] md:text-[#D9961A] hover:bg-[#D9961A] hover:text-white transition-all duration-300 rounded-md font-bold">
+                            Reservas
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- Primeira Sessão -->
+        <section class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 md:translate-y-[-160px] text-center text-white z-20 relative w-full max-w-xl px-4">
+            <div id="sec-1" class="space-y-4">
+                <h1 class="text-3xl md:text-4xl font-bold animate-fade-in">
+                    Bem-vindo ao Restaurante Felix
+                </h1>
+                <div class="text-base md:text-lg border-b border-[#D9961A] pb-4 mx-auto max-w-md">
+                    <p>
+                        Descubra o encanto e a excelência gastronômica de um ícone da alta culinária em Fortaleza
+                    </p>
+                </div>
+                <div class="mt-6 space-x-4">
+                    <a href="#cardapio" class="inline-block px-6 py-3 bg-[#D9961A] text-black hover:bg-opacity-90 transition-colors duration-300 rounded-md">
+                        Ver Cardápio
+                    </a>
+                    <a href="#reservas" class="inline-block px-6 py-3 border border-white hover:bg-white hover:text-black transition-colors duration-300 rounded-md">
+                        Fazer Reserva
+                    </a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+
+
+    <!-- Eventos -->
+    <div id="eventos" class="bg-gradient-to-b from-ceara-black to-ceara-black/95 py-24 relative z-20">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-20 relative">
+                <div class="flex items-center justify-center gap-4 mb-3">
+                    <span class="h-px w-8 bg-black"></span>
+                    <span class="text-black uppercase tracking-[0.2em] text-4xl">Agenda</span>
+                    <span class="h-px w-8 bg-black"></span>
+                </div>
+                <h2 class="text-2xl md:text-3xl text-black mb-6 my-[50px] font-semibold">Próximos Eventos</h2>
+                <p class="text-ceara-gray text-lg max-w-2xl mx-auto leading-relaxed">
+                    Experiências únicas aguardam por você em um ambiente sofisticado e acolhedor
+                </p>
+                <div class="w-24 h-1 bg-gradient-to-r from-transparent via-ceara-yellow to-transparent mx-auto mt-8">
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+                <div
+                    class="group bg-gradient-to-b from-white/10 to-white/5 backdrop-blur-sm rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-ceara-yellow/10">
+                    <div class="relative h-56 overflow-hidden">
+                        <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="https://i.postimg.cc/7P0MzdxM/casament.jpg" alt="">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-ceara-black via-ceara-black/80 to-transparent opacity-90">
+                        </div>
+                        <div
+                            class="absolute top-4 right-4 bg-ceara-black/80 backdrop-blur-sm px-3 py-1 rounded-full border border-ceara-yellow/20">
+                            <span class="text-ceara-yellow text-sm">25 Jan</span>
+                        </div>
+                    </div>
+                    <div class="p-6 relative">
+                        <div
+                            class="flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-br from-ceara-yellow to-ceara-golden mb-4 mx-auto -mt-12 relative z-10 border-4 border-ceara-black shadow-lg shadow-ceara-yellow/20">
+                            <i class="fas fa-utensils text-ceara-black text-xl"></i>
+                        </div>
+                        <h3 class="text-xl text-black text-center font-semibold mb-3">Casamento Personalizado</h3>
+                        <div class="flex justify-center items-center gap-2 text-ceara-yellow/90 mb-4 text-sm">
+                            <i class="fas fa-clock"></i>
+                            <span>19:00</span>
+                        </div>
+                        <p class="text-ceara-gray text-center text-sm leading-relaxed">Uma de nossas unidades
+                            acompanharam com os pratos do nosso restaurante.</p>
+
+                            <a href="./views/reservations/reserva-1.html">
+                                <button
+                                        class="mt-6 w-full py-3 px-6 bg-transparent border border-ceara-yellow/20 text-ceara-yellow hover:bg-gradient-to-r hover:from-ceara-yellow hover:to-ceara-golden hover:text-ceara-black transition-all duration-300 rounded-lg group-hover:border-ceara-yellow/40 flex items-center justify-center gap-2">
+                                        <span>Reservar</span>
+                                        <i
+                                            class="fas fa-arrow-right text-sm transition-transform duration-300 group-hover:translate-x-1"></i>
+                                </button>
+                            </a>
+
+                                <a href="./views/informations/inf-reserva1.html">
+                                    <button class="flex justify-center items-center mt-6 w-full py-3 px-6 bg-transparent rounded-lg transition ease-in-out duration-500 border-2 group-hover:border-[#D9961A] group-hover:bg-[#D9961A] space-x-2">
+                                        <span>Informações</span>
+                                        <i class="fa-solid fa-info text-sm"></i>
+                                    </button>
+                                </a>
+                    </div>
+                </div>
+                <div
+                    class="group bg-gradient-to-b from-white/10 to-white/5 backdrop-blur-sm rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-ceara-yellow/10">
+                    <div class="relative h-56 overflow-hidden">
+                        <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="https://i.postimg.cc/nr4PwLqn/chef-cooking.jpg" alt="">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-ceara-black via-ceara-black/80 to-transparent opacity-90">
+                        </div>
+                        <div
+                            class="absolute top-4 right-4 bg-ceara-black/80 backdrop-blur-sm px-3 py-1 rounded-full border border-ceara-yellow/20">
+                            <span class="text-ceara-yellow text-sm">30 Jan</span>
+                        </div>
+                    </div>
+                    <div class="p-6 relative">
+                        <div
+                            class="flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-br from-ceara-yellow to-ceara-golden mb-4 mx-auto -mt-12 relative z-10 border-4 border-ceara-black shadow-lg shadow-ceara-yellow/20">
+                            <i class="fas fa-graduation-cap text-ceara-black text-xl"></i>
+                        </div>
+                        <h3 class="text-xl text-black text-center font-semibold mb-3">Workshop Culinário</h3>
+                        <div class="flex justify-center items-center gap-2 text-ceara-yellow/90 mb-4 text-sm">
+                            <i class="fas fa-clock"></i>
+                            <span>15:00</span>
+                        </div>
+                        <p class="text-ceara-gray text-center text-sm leading-relaxed">Aprenda técnicas exclusivas de
+                            culinária com nossa equipe de chefs.</p>
+                            <a href="./views/reservations/reserva-2.html">
+                                <button
+                                    class="mt-6 w-full py-3 px-6 bg-transparent border border-ceara-yellow/20 text-ceara-yellow hover:bg-gradient-to-r hover:from-ceara-yellow hover:to-ceara-golden hover:text-ceara-black transition-all duration-300 rounded-lg group-hover:border-ceara-yellow/40 flex items-center justify-center gap-2">
+                                    <span>Reservar</span>
+                                    <i
+                                        class="fas fa-arrow-right text-sm transition-transform duration-300 group-hover:translate-x-1"></i>
+                                </button>
+                            </a>
+
+                            <a href="./views/informations/inf-reserva2.html">
+                                <button class="flex justify-center items-center mt-6 w-full py-3 px-6 bg-transparent rounded-lg transition ease-in-out duration-500 border-2 group-hover:border-[#D9961A] group-hover:bg-[#D9961A] space-x-2">
+                                    <span>Informações</span>
+                                    <i class="fa-solid fa-info text-sm"></i>
+                                </button>
+                            </a>
+                    </div>
+                </div>
+                <div
+                    class="group bg-gradient-to-b from-white/10 to-white/5 backdrop-blur-sm rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-ceara-yellow/10">
+                    <div class="relative h-56 overflow-hidden">
+                        <img src="https://i.postimg.cc/d33h5hby/music.jpg" alt="Jazz & Jantar"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-ceara-black via-ceara-black/80 to-transparent opacity-90">
+                        </div>
+                        <div
+                            class="absolute top-4 right-4 bg-ceara-black/80 backdrop-blur-sm px-3 py-1 rounded-full border border-ceara-yellow/20">
+                            <span class="text-ceara-yellow text-sm">5 Fev</span>
+                        </div>
+                    </div>
+                    <div class="p-6 relative">
+                        <div
+                            class="flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-br from-ceara-yellow to-ceara-golden mb-4 mx-auto -mt-12 relative z-10 border-4 border-ceara-black shadow-lg shadow-ceara-yellow/20">
+                            <i class="fas fa-music text-ceara-black text-xl"></i>
+                        </div>
+                        <h3 class="text-xl text-black text-center font-semibold mb-3">Jazz & Jantar</h3>
+                        <div class="flex justify-center items-center gap-2 text-ceara-yellow/90 mb-4 text-sm">
+                            <i class="fas fa-clock"></i>
+                            <span>20:00</span>
+                        </div>
+                        <p class="text-ceara-gray text-center text-sm leading-relaxed">Uma noite especial com música ao
+                            vivo e menu degustação.</p>
+                        <a href="./views/reservations/reserva-3.html">
+                            <button
+                                class="mt-6 w-full py-3 px-6 bg-transparent border border-ceara-yellow/20 text-ceara-yellow hover:bg-gradient-to-r hover:from-ceara-yellow hover:to-ceara-golden hover:text-ceara-black transition-all duration-300 rounded-lg group-hover:border-ceara-yellow/40 flex items-center justify-center gap-2">
+                                <span>Reservar</span>
+                                <i
+                                    class="fas fa-arrow-right text-sm transition-transform duration-300 group-hover:translate-x-1"></i>
+                            </button>
+                        </a>
+
+                        <a href="./views/informations/inf-reserva3.html">
+                            <button class="flex justify-center items-center mt-6 w-full py-3 px-6 bg-transparent rounded-lg transition ease-in-out duration-500 border-2 group-hover:border-[#D9961A] group-hover:bg-[#D9961A] space-x-2">
+                                <span>Informações</span>
+                                <i class="fa-solid fa-info text-sm"></i>
+                            </button>
+                        </a>
+                    </div>
+                </div>
+                <div
+                    class="group bg-gradient-to-b from-white/10 to-white/5 backdrop-blur-sm rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-ceara-yellow/10">
+                    <div class="relative h-56 overflow-hidden">
+                        <img src="https://i.postimg.cc/GpR9Zg0r/reserved.jpg" alt="Reservado"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-ceara-black via-ceara-black/80 to-transparent opacity-90">
+                        </div>
+                        <div
+                            class="absolute top-4 right-4 bg-ceara-black/80 backdrop-blur-sm px-3 py-1 rounded-full border border-ceara-yellow/20">
+                            <span class="text-ceara-yellow text-sm">10 Fev</span>
+                        </div>
+                    </div>
+                    <div class="p-6 relative">
+                        <div
+                            class="flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-br from-ceara-yellow to-ceara-golden mb-4 mx-auto -mt-12 relative z-10 border-4 border-ceara-black shadow-lg shadow-ceara-yellow/20">
+                            <i class="fas fa-glass-cheers text-ceara-black text-xl"></i>
+                        </div>
+                        <h3 class="text-xl text-black text-center font-semibold mb-3">Evento Privado</h3>
+                        <div class="flex justify-center items-center gap-2 text-ceara-yellow/90 mb-4 text-sm">
+                            <i class="fas fa-clock"></i>
+                            <span>19:30</span>
+                        </div>
+                        <p class="text-ceara-gray text-center text-sm leading-relaxed">Espaço reservado para evento
+                            privativo. Entre em contato para mais informações.</p>
+                        <a href="./views/reservations/reserva-4.html">
+                            <button
+                                class="mt-6 w-full py-3 px-6 bg-transparent border border-ceara-yellow/20 text-ceara-yellow hover:bg-gradient-to-r hover:from-ceara-yellow hover:to-ceara-golden hover:text-ceara-black transition-all duration-300 rounded-lg group-hover:border-ceara-yellow/40 flex items-center justify-center gap-2">
+                                <span>Reservar</span>
+                                <i
+                                    class="fas fa-arrow-right text-sm transition-transform duration-300 group-hover:translate-x-1"></i>
+                            </button>
+                        </a>
+
+                        <a href="./views/informations/inf-reserva4.html">
+                            <button class="flex justify-center items-center mt-6 w-full py-3 px-6 bg-transparent rounded-lg transition ease-in-out duration-500 border-2 group-hover:border-[#D9961A] group-hover:bg-[#D9961A] space-x-2">
+                                    <span>Informações</span>
+                                    <i class="fa-solid fa-info text-sm"></i>
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Início do cardápio -->
+<section id="cardapio" class="container mx-auto px-4 py-16 max-w-7xl">
+    <h2 class="text-center font-serif text-5xl text-black mb-16 relative">
+        <span class="relative inline-block">
+            Cardápio
+            <div class="absolute -bottom-4 left-1/2 -translate-x-1/2 w-24 h-1 bg-black"></div>
+        </span>
+    </h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+        <!-- Item 1 -->
+        <div class="group">
+            <div class="relative overflow-hidden rounded-2xl shadow-lg">
+                <img class="w-full h-72 object-cover transform transition-transform duration-500 group-hover:scale-110" 
+                    src="https://i.postimg.cc/NGnFgjhd/prato-1.jpg"
+                    alt="Cordeiro ao Molho de Frutas Vermelhas" />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </div>
+            
+            <div class="mt-6 text-center">
+                <h3 class="text-2xl font-semibold text-gray-800 mb-4">Cordeiro ao Molho de Frutas Vermelhas</h3>
+                <a href="./views/prato-1.html" 
+                   class="inline-flex items-center gap-2 bg-yellow-700 hover:bg-yellow-800 text-white px-8 py-3 rounded-full transition-colors duration-300 shadow-md hover:shadow-lg">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span>Faça Seu Pedido</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Item 2 -->
+        <div class="group">
+            <div class="relative overflow-hidden rounded-2xl shadow-lg">
+                <img class="w-full h-72 object-cover transform transition-transform duration-500 group-hover:scale-110" 
+                    src="./assets/img/prato-2.jpg"
+                    alt="Linguine Marítimo" />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </div>
+            
+            <div class="mt-6 text-center">
+                <h3 class="text-2xl font-semibold text-gray-800 mb-4">Linguine Marítimo</h3>
+                <a href="./views/prato-2.html" 
+                   class="inline-flex items-center gap-2 bg-yellow-700 hover:bg-yellow-800 text-white px-8 py-3 rounded-full transition-colors duration-300 shadow-md hover:shadow-lg">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span>Faça Seu Pedido</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Item 3 -->
+        <div class="group">
+            <div class="relative overflow-hidden rounded-2xl shadow-lg">
+                <img class="w-full h-72 object-cover transform transition-transform duration-500 group-hover:scale-110" 
+                    src="https://i.postimg.cc/FKqFhT87/prato-3.jpg"
+                    alt="Filé Mignon Confit com Purê Cremoso" />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </div>
+            
+            <div class="mt-6 text-center">
+                <h3 class="text-2xl font-semibold text-gray-800 mb-4">Filé Mignon Confit com Purê Cremoso</h3>
+                <a href="./views//prato-3.html" 
+                   class="inline-flex items-center gap-2 bg-yellow-700 hover:bg-yellow-800 text-white px-8 py-3 rounded-full transition-colors duration-300 shadow-md hover:shadow-lg">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span>Faça Seu Pedido</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Item 4 -->
+        <div class="group">
+            <div class="relative overflow-hidden rounded-2xl shadow-lg">
+                <img class="w-full h-72 object-cover transform transition-transform duration-500 group-hover:scale-110" 
+                    src="https://i.postimg.cc/9XyXjtpQ/prato-4.jpg"
+                    alt="Risoto de Funghi Selvatici" />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </div>
+            
+            <div class="mt-6 text-center">
+                <h3 class="text-2xl font-semibold text-gray-800 mb-4">Risoto de Funghi Selvatici</h3>
+                <a href="./views/prato-4.html" 
+                   class="inline-flex items-center gap-2 bg-yellow-700 hover:bg-yellow-800 text-white px-8 py-3 rounded-full transition-colors duration-300 shadow-md hover:shadow-lg">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span>Faça Seu Pedido</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+    <!-- Rodapé -->
+    <footer id="sobre" class="bg-[#0D0D0D] text-[#d6d4d4] relative z-20">
+        <!-- Top Border Gradient -->
+        <div class="h-1 w-full bg-gradient-to-r from-transparent via-[#D9961A] to-transparent"></div>
+
+        <!-- Main Footer Content -->
+        <div class="container mx-auto px-4 py-16">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+                <!-- Logo & About -->
+                <div>
+                    <h3 class="text-3xl font-bold text-white mb-4 tracking-wider">Restaurante Felix</h3>
+                    <p class="mb-6 text-sm leading-relaxed opacity-90">
+                        Descubra o encanto e a excelência gastronômica de um ícone da alta culinária em Fortaleza.
+                    </p>
+
+                    <!-- Social Media Links with Aria Labels -->
+                    <div class="flex space-x-4 text-[#D9961A]">
+                        <a href="#" aria-label="Facebook" class="hover:text-[#8C5C03] transition-colors duration-300">
+                            <i class="fab fa-facebook text-2xl" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" aria-label="Instagram" class="hover:text-[#8C5C03] transition-colors duration-300">
+                            <i class="fab fa-instagram text-2xl" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" aria-label="WhatsApp" class="hover:text-[#8C5C03] transition-colors duration-300">
+                            <i class="fab fa-whatsapp text-2xl" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Useful Links -->
+                <div>
+                    <h4 class="text-2xl font-semibold text-white mb-4 tracking-wider">Links Úteis</h4>
+                    <nav>
+                        <ul class="space-y-2">
+                            <li>
+                                <a href="#home"
+                                    class="hover:text-[#D9961A] hover:underline transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-[#D9961A]">
+                                    Home
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#eventos"
+                                    class="hover:text-[#D9961A] hover:underline transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-[#D9961A]">
+                                    Eventos
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#menu"
+                                    class="hover:text-[#D9961A] hover:underline transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-[#D9961A]">
+                                    Cardápio
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#reservations"
+                                    class="hover:text-[#D9961A] hover:underline transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-[#D9961A]">
+                                    Reservas
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+
+                <!-- Business Hours -->
+                <div>
+                    <h4 class="text-2xl font-semibold text-white mb-4 tracking-wider">Horário de Funcionamento</h4>
+                    <ul class="space-y-2">
+                        <li class="flex justify-between">
+                            <span>Segunda - Sexta:</span>
+                            <time datetime="11:00-23:00">11h - 23h</time>
+                        </li>
+                        <li class="flex justify-between">
+                            <span>Sábado:</span>
+                            <time datetime="11:00-00:00">11h - 00h</time>
+                        </li>
+                        <li class="flex justify-between">
+                            <span>Domingo:</span>
+                            <time datetime="11:00-22:00">11h - 22h</time>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Contact Information -->
+                <div>
+                    <h4 class="text-2xl font-semibold text-white mb-4 tracking-wider">Contato</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-map-marker-alt text-[#D9961A]" aria-hidden="true"></i>
+                            <address class="not-italic">
+                                Av. Beira Mar, 1234 - Fortaleza, CE
+                            </address>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-phone text-[#D9961A]" aria-hidden="true"></i>
+                            <a href="tel:+558599999999" class="hover:text-[#D9961A] transition-colors">
+                                (85) 9999-9999
+                            </a>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-envelope text-[#D9961A]" aria-hidden="true"></i>
+                            <a href="mailto:contato@restaurantefelix.com"
+                                class="hover:text-[#D9961A] transition-colors">
+                                contato@restaurantefelix.com
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Copyright Section -->
+        <div class="border-t border-[#D9961A]/20">
+            <div class="container mx-auto px-4 py-6">
+                <div class="flex flex-col items-center text-center">
+                    <p class="text-sm text-[#d6d4d4]">
+                        Desenvolvido por
+                        <a href="https://github.com/mthfl" target="_blank" rel="noopener noreferrer"
+                            class="text-[#D9961A] hover:underline mx-1">
+                            Matheus Felix
+                        </a>
+                        &
+                        <a href="https://github.com/kauancristian" target="_blank" rel="noopener noreferrer"
+                            class="text-[#D9961A] hover:underline mx-1">
+                            Kauan Cristian
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>

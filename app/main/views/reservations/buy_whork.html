@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Matheus Felix, Kauan Cristian">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/imask/6.4.3/imask.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Finalizar Reserva de Workshop</title>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'ceara-golden': '#8C5C03',
+                        'ceara-yellow': '#D9961A',
+                        'ceara-brown': '#A65A3F',
+                        'ceara-gray': '#404040',
+                        'ceara-black': '#0D0D0D',
+                    }
+                },
+            },
+        };
+
+        window.onload = function () {
+            IMask(document.getElementById('cep'), { mask: '00000-000' });
+            IMask(document.getElementById('cpf'), { mask: '000.000.000-00' });
+            IMask(document.getElementById('phone'), { mask: '(00) 00000-0000' });
+            loadWorkshopDetails();
+        };
+
+        function togglePaymentMethod(method) {
+            document.getElementById('pixSection').classList.toggle('hidden', method !== 'pix');
+            document.getElementById('cardSection').classList.toggle('hidden', method !== 'card');
+        }
+
+        function formatDate(date) {
+            return new Date(date).toLocaleDateString('pt-BR');
+        }
+
+        function generatePDF() {
+    const Nome = document.getElementById('fullName').value;
+    const Cep = document.getElementById('cep').value;
+    const Cpf = document.getElementById('cpf').value;
+    const Phone = document.getElementById('phone').value;
+    const EventDate = document.getElementById('eventDate').value;
+
+    if (!Nome || !Cep || !Cpf || !Phone || !EventDate) {
+        alert('Por favor, preencha todos os campos.');
+        return;
+    }
+
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF('p', 'pt', 'a4');
+
+    doc.setFontSize(20);
+    doc.setTextColor(26, 35, 126);
+    doc.text('Confirmação de Whork', 40, 40);
+
+    doc.setFontSize(12);
+    doc.setTextColor(0, 0, 0);
+    doc.text(`Data da Reserva: ${new Date().toLocaleDateString('pt-BR')}`, 40, 70);
+    doc.text(`Data do Evento: ${new Date(EventDate).toLocaleDateString('pt-BR')}`, 40, 90);
+
+    doc.setFontSize(14);
+    doc.setTextColor(48, 63, 159);
+    doc.text('Informações do Cliente', 40, 120);
+    doc.setFontSize(12);
+    doc.setTextColor(0, 0, 0);
+    doc.text(`Nome: ${Nome}`, 40, 140);
+    doc.text(`CEP: ${Cep}`, 40, 160);
+    doc.text(`CPF: ${Cpf}`, 40, 180);
+    doc.text(`Telefone: ${Phone}`, 40, 200);
+
+    const orderDetails = JSON.parse(localStorage.getItem('currentOrder'));
+
+    doc.setFontSize(14);
+    doc.setTextColor(48, 63, 159);
+    doc.text('Detalhes ', 40, 240);
+    doc.setFontSize(12);
+    doc.setTextColor(0, 0, 0);
+    doc.text(`Plano Selecionado: ${orderDetails.plan.name}`, 40, 260);
+    doc.text(`Preço do Plano: R$ ${orderDetails.plan.price.toFixed(2)}`, 40, 280);
+    doc.text(`Espaços Selecionados: ${orderDetails.spaces.map(space => space.name).join(', ')}`, 40, 300);
+    doc.text(`Número de Convidados: ${orderDetails.spaces.length}`, 40, 320);
+
+    doc.setFontSize(16);
+    doc.setTextColor(26, 35, 126);
+    doc.text(`Total: R$ ${(orderDetails.plan.price + orderDetails.deliveryFee).toFixed(2)}`, 40, 360);
+
+    doc.save(`reserva-Whork-${new Date().getTime()}.pdf`);
+}function loadOrderDetails() {
+    const orderDetails = JSON.parse(localStorage.getItem('currentOrder'));
+    
+    if (orderDetails) {
+        const orderSummary = document.createElement('div');
+        orderSummary.innerHTML = `
+            <div class="bg-[#EBEBEB] rounded-xl p-4 md:p-5 mb-6">
+                <h2 class="text-lg font-bold mb-4">Resumo da Reserva</h2>
+                <div class="space-y-2">
+                    <div class="flex justify-between">
+                        <span>Plano Selecionado</span>
+                        <span>${orderDetails.plan?.name || 'Não selecionado'}</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>Preço do Plano</span>
+                        <span>R$ ${orderDetails.plan?.price ? orderDetails.plan.price.toFixed(2) : '0.00'}</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>Espaços Selecionados</span>
+                        <span>${orderDetails.spaces?.length > 0 ? orderDetails.spaces.map(space => space.name).join(', ') : 'Nenhum espaço selecionado'}</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>Número de Convidados</span>
+                        <span>${orderDetails.spaces?.length || 0}</span>
+                    </div>
+                    <hr class="my-2 border-gray-300">
+                    <div class="flex justify-between font-bold">
+                        <span>Total</span>
+                        <span>R$ ${((orderDetails.plan?.price || 0) + (orderDetails.deliveryFee || 0)).toFixed(2)}</span>
+                    </div>
+                </div>
+            </div>
+        `;
+        document.querySelector('main').appendChild(orderSummary);
+    }
+}
+
+window.onload = function() {
+    loadOrderDetails();
+};
+
+
+function mascaraCEP(event) {
+            var input = event.target;
+            var value = input.value.replace(/\D/g, ''); // Remove tudo o que não for número
+
+            // Aplica a máscara
+            if (value.length <= 5) {
+                input.value = value.replace(/(\d{5})(\d{0,3})/, '$1-$2');
+            } else {
+                input.value = value.replace(/(\d{5})(\d{3})(\d{0,3})/, '$1-$2');
+            }
+        }
+
+        function mascaraCPF(event) {
+            var input = event.target;
+            var value = input.value.replace(/\D/g, ''); // Remove tudo o que não for número
+
+            // Aplica a máscara
+            if (value.length <= 3) {
+                input.value = value.replace(/(\d{3})(\d{0,3})/, '$1.$2');
+            } else if (value.length <= 6) {
+                input.value = value.replace(/(\d{3})(\d{3})(\d{0,3})/, '$1.$2.$3');
+            } else {
+                input.value = value.replace(/(\d{3})(\d{3})(\d{3})(\d{0,2})/, '$1.$2.$3-$4');
+            }
+        }
+
+    </script>
+</head>
+
+<body class="select-none bg-white">
+    <header class="my-4 mx-auto flex flex-col items-center w-full px-4 md:px-0">
+        <div class="flex space-x-4 md:space-x-8 items-center">
+            <a href="javascript:history.back()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0D0D0D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+            </a>
+            <h3 class="text-lg md:text-xl">Finalizar Reserva de Casamento</h3>
+        </div>
+        <hr class="w-full max-w-[700px] h-[2px] bg-[#EBEBEB] my-4">
+    </header>
+
+    <main class="max-w-[700px] mx-auto px-4">
+        <div class="bg-[#EBEBEB] rounded-xl p-4 md:p-5 mb-6">
+            <h2 class="text-lg font-bold mb-4">Informações Pessoais</h2>
+            <div class="space-y-4">
+                <div class="flex flex-col md:flex-row gap-4">
+                    <div class="flex-1">
+                        <label class="block text-sm mb-2">Nome Completo</label>
+                        <input id="fullName" required type="text" class="w-full p-2 rounded-lg border-2 focus:outline-none focus:border-ceara-yellow">
+                    </div>
+                    <div class="md:w-[200px]">
+                        <label class="block text-sm mb-2">CEP</label>
+                        <input id="cep" type="text" oninput="mascaraCEP(event)"  required class="w-full p-2 rounded-lg border-2 focus:outline-none focus:border-ceara-yellow">
+                    </div>
+                </div>
+                <div class="flex flex-col md:flex-row gap-4">
+                    <div class="flex-1">
+                        <label class="block text-sm mb-2">CPF</label>
+                        <input id="cpf" type="text" oninput="mascaraCPF(event)" required class="w-full p-2 rounded-lg border-2 focus:outline-none focus:border-ceara-yellow">
+                    </div>
+                    <div class="flex-1">
+                        <label class="block text-sm mb-2">Telefone</label>
+                        <input id="phone" type="text" required class="w-full p-2 rounded-lg border-2 focus:outline-none focus:border-ceara-yellow">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm mb-2">Data do Evento</label>
+                    <input id="eventDate" type="date" required class="w-full p-2 rounded-lg border-2 focus:outline-none focus:border-ceara-yellow">
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-[#EBEBEB] rounded-xl p-4 md:p-5 mb-6">
+            <h2 class="text-lg font-bold mb-4">Método de Pagamento</h2>
+            <div class="space-y-4">
+                <div class="flex space-x-4">
+                    <button onclick="togglePaymentMethod('pix')" class="flex-1 p-3 rounded-lg border-2 border-ceara-yellow bg-white hover:bg-ceara-yellow transition duration-300">
+                        <i class="fas fa-qrcode mr-2"></i>PIX
+                    </button>
+                    <button onclick="togglePaymentMethod('card')" class="flex-1 p-3 rounded-lg border-2 border-ceara-yellow bg-white hover:bg-ceara-yellow transition duration-300">
+                        <i class="fas fa-credit-card mr-2"></i>Cartão
+                    </button>
+                </div>
+
+                <div id="pixSection" class="hidden">
+                    <div class="bg-white p-4 rounded-lg text-center">
+                        <i class="fas fa-qrcode text-6xl mb-4"></i>
+                        <p>Escaneie o QR Code para pagar</p>
+                    </div>
+                </div>
+
+                <div id="cardSection" class="hidden space-y-4">
+                    <div>
+                        <label class="block text-sm mb-2">Número do Cartão</label>
+                        <input type="text" class="w-full p-2 rounded-lg border-2 focus:outline-none focus:border-ceara-yellow">
+                    </div>
+                    <div class="flex space-x-4">
+                        <div class="flex-1">
+                            <label class="block text-sm mb-2">Validade</label>
+                            <input type="text" class="w-full p-2 rounded-lg border-2 focus:outline-none focus:border-ceara-yellow">
+                        </div>
+                        <div class="flex-1">
+                            <label class="block text-sm mb-2">CVV</label>
+                            <input type="text" class="w-full p-2 rounded-lg border-2 focus:outline-none focus:border-ceara-yellow">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex justify-center items-center my-8">
+            <button onclick="generatePDF()" class="w-full max-w-[300px] text-center border-4 border-ceara-yellow bg-white text-black p-2 rounded-xl font-bold flex items-center justify-center transition duration-300 ease-in-out hover:bg-ceara-yellow hover:text-ceara-black hover:border-ceara-yellow">
+                <i class="fas fa-credit-card mr-2"></i> 
+                Finalizar Reserva
+            </button>
+        </div>
+    </main>
+</body>
+
+</html>
