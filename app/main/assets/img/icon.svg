@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- F estilizado -->
+  <path 
+    d="
+      M60 40
+      h80
+      q5 0 5 5
+      v15
+      q0 5 -5 5
+      h-55
+      v35
+      h45
+      q5 0 5 5
+      v15
+      q0 5 -5 5
+      h-45
+      v65
+      q0 5 -5 5
+      h-20
+      q-5 0 -5 -5
+      v-145
+      q0 -5 5 -5
+      Z
+    "
+    fill="#8C5C03"
+    stroke="#D9961A"
+    stroke-width="5"
+  />
+</svg>
